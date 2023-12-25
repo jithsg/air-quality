@@ -1,0 +1,8 @@
+hopsworks
+geopy
+python-dotenv
+streamlit
+streamlit-folium
+joblib
+plotly
+nbconvert
