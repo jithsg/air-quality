@@ -1,0 +1,31 @@
+name: air_quality_feature_pipeline
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'
+
+jobs:
+  test_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3
+
+      - name: setup python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+
+      - name: install python packages
+        run: |
+          pip install -r requirements.txt
+        working-directory: .
+          
+      - name: execute Feature Pipeline
+        env: 
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+          CONTINENT: "Seattle"
+        run: |
+          python ./notebooks/02_feature_pipeline.py
+        working-directory: .
